@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customizable Survey</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Customizable Survey</h1>
+
+    <div id="survey-container">
+      <!-- Example question -->
+      <div class="question" data-type="scale">
+        <input type="text" class="question-text" value="How satisfied are you with our service?" />
+        <select class="question-type" onchange="changeQuestionType(this)">
+          <option value="scale">1-5 Scale</option>
+          <option value="single">Single Pick</option>
+        </select>
+        <div class="options-container"></div>
+        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
+        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button> <!-- Hidden initially -->
+      </div>
+    </div>
+
+    <button onclick="addQuestion()">Add Question</button>
+    <button onclick="sendSurvey()">SEND</button>
+    <div id="survey-preview"></div> <!-- Display survey preview here -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
