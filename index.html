@@ -3,142 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customizable Survey</title>
+  <title>Survey Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-
 </head>
 <body>
-
   <div class="container">
-    <h1>Customizable Survey</h1>
-
-    <div id="survey-container">
-      <!-- Dynamic questions will appear here -->
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>
-      <div class="question" data-type="scale">
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="How satisfied are you with our service?" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale">1-5 Scale</option>
-          <option value="single">Single Pick</option>
-        </select>
-        <div class="options-container"></div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
-      </div>      
-    </div>
-
-    <button onclick="addQuestion()">Add Question</button>
-
-    <div id="survey-preview"></div> <!-- Display survey preview here -->
+    <h1>Survey Dashboard</h1>
+    <button id="new-survey-btn" onclick="createNewSurvey()">New Survey</button>
     
-    <form id="survey-form" action="https://formspree.io/f/mwpvalzl" method="POST">
-      <textarea name="surveyData" id="surveyData" style="display:none;"></textarea>
-      <input type="email" name="_replyto" placeholder="Your email" required>
-      <button type="submit" onclick="prepareSurveyData()">SEND</button>
-    </form>
+    <div id="surveys-list">
+      <h2>Your Surveys</h2>
+      <div class="survey-headers">
+        <span>Company Name</span>
+        <span>Survey Form Link</span>
+        <span>Actions</span> <!-- New action column for delete -->
+      </div>
+      <!-- List of surveys will be shown here -->
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Function to navigate to the survey creation page
+    function createNewSurvey() {
+      window.location.href = 'survey.html';
+    }
+
+    // Function to delete a survey
+    function deleteSurvey(id) {
+      let savedSurveys = JSON.parse(localStorage.getItem('surveys')) || [];
+      savedSurveys = savedSurveys.filter(survey => survey.id !== id);  // Remove survey by ID
+      localStorage.setItem('surveys', JSON.stringify(savedSurveys));   // Save the updated list
+      loadSurveys();  // Reload the surveys list
+    }
+
+    // Function to load saved surveys
+    function loadSurveys() {
+      const surveysList = document.getElementById('surveys-list');
+      surveysList.innerHTML = '';  // Clear current list
+      const savedSurveys = JSON.parse(localStorage.getItem('surveys')) || [];
+
+      // Re-add headers after clearing
+      const surveyHeaders = document.createElement('div');
+      surveyHeaders.classList.add('survey-headers');
+      surveyHeaders.innerHTML = `
+        <span>Company Name</span>
+        <span>Survey Form Link</span>
+        <span>Actions</span>
+      `;
+      surveysList.appendChild(surveyHeaders);
+
+      // Display each survey
+      savedSurveys.forEach(survey => {
+        const surveyItem = document.createElement('div');
+        surveyItem.classList.add('survey-item');
+
+        const companyName = document.createElement('span');
+        companyName.classList.add('company-name');
+        companyName.textContent = survey.title || "Unknown Company";
+
+        const surveyLink = document.createElement('a');
+        const surveyUrl = `${window.location.origin}/survey.html?id=${survey.id}`;
+        surveyLink.href = surveyUrl;
+        surveyLink.textContent = surveyUrl;
+        surveyLink.classList.add('survey-link');
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('delete-survey-btn');
+        deleteButton.onclick = () => deleteSurvey(survey.id);  // Add delete functionality
+
+        surveyItem.appendChild(companyName);
+        surveyItem.appendChild(surveyLink);
+        surveyItem.appendChild(deleteButton);
+        surveysList.appendChild(surveyItem);
+      });
+    }
+
+    window.onload = loadSurveys;
+  </script>
 </body>
 </html>
-
