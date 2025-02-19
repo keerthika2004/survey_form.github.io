@@ -1,92 +1,272 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .question {
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .question-text {
-    flex: 1;
-    margin-right: 10px;
-    padding: 5px;
-  }
-  
-  .question-type {
-    margin-right: 10px;
-  }
-  
-  .options-container {
-    flex: 1;
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-  }
-  
-  button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .delete-question {
-    background-color: #e74c3c;
-  }
-  
-  .delete-question:hover {
-    background-color: #c0392b;
-  }
-  .drag-handle {
-    cursor: grab;
-    margin-right: 10px;
-  }
-  
-  .drag-handle:active {
-    cursor: grabbing;
-  }
-  
-  .sortable-ghost {
-    opacity: 0.5;
-    background-color: #ddd;
-  }
-  
-  #survey-preview {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-  }
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+h1, h2 {
+  text-align: center;
+}
+
+.question {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Survey List Headers */
+.survey-headers {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.survey-headers span {
+  flex: 1;
+}
+
+/* Survey List Headers */
+.survey-headers {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.survey-headers span {
+  flex: 1;
+  text-align: left;  /* Ensures text aligns to the left */
+}
+
+
+/* Survey Items Styling */
+.survey-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.company-name {
+  flex: 2;  /* Allocates more space to company name */
+  font-size: 16px;
+  color: #333;
+}
+
+.survey-link {
+  flex: 3;  /* Ensures link takes up more space */
+  text-align: left;  /* Aligns the survey link to the left */
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  word-break: break-all;  /* Ensures long links break to new lines */
+}
+
+.survey-link:hover {
+  text-decoration: underline;
+}
+
+#new-survey-btn {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.survey-headers, .survey-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.survey-item {
+  font-weight: normal;
+}
+
+.company-name, .survey-link {
+  flex: 1;
+  padding-right: 20px;
+  word-wrap: break-word;
+}
+
+.survey-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.survey-link:hover {
+  text-decoration: underline;
+}
+
+.delete-survey-btn {
+  flex: 1;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;  /* Adds spacing between link and delete button */
+  text-align: center;
+}
+
+.delete-survey-btn:hover {
+  background-color: #c0392b;
+}
+
+#new-survey-btn {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.survey-item span {
+  text-align: left;
+}
+
+.survey-headers span {
+  font-weight: bold;
+  text-align: left;
+}
+
+.survey-item span {
+  text-align: left;
+}
+
+.question-text {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.question-type {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.options-container {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.option-input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.delete-question {
+  background-color: #e74c3c;
+}
+
+.delete-question:hover {
+  background-color: #c0392b;
+}
+
+.add-option {
+  margin-top: 10px;
+}
+
+.action-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.action-buttons button {
+  margin: 0 10px;
+}
+
+#survey-list-container {
+  margin-top: 20px;
+}
+
+.survey-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.company-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.survey-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.survey-link:hover {
+  text-decoration: underline;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
