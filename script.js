@@ -177,6 +177,33 @@ function saveSurvey() {
   window.location.href = 'index.html';  // Redirect to main page after saving
 }
 
+function sendSurvey() {
+  const questions = document.querySelectorAll('.question');
+  let surveyData = "";
+
+  // Collect the survey data
+  questions.forEach((question, index) => {
+    const questionText = question.querySelector('.question-text').value;
+    const questionType = question.querySelector('.question-type').value;
+    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
+
+    surveyData += `Question ${index + 1}: ${questionText}\nType: ${questionType}\n`;
+
+    if (questionType === 'single') {
+      surveyData += `Options:\n ${options.join(',\n')}\n`;
+    }
+
+    surveyData += '\n';
+  });
+
+  // Populate the hidden form input with the survey data
+  document.getElementById('survey-body').value = surveyData;
+
+  // Submit the form programmatically to Formspree
+  document.getElementById('survey-form').submit();
+}
+
+
 //submit the survey
 /*function sendSurvey() {
   const questions = document.querySelectorAll('.question');
@@ -204,7 +231,7 @@ function saveSurvey() {
   window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`;
 }
 */
-function sendSurvey() {
+/*function sendSurvey() {
   const questions = document.querySelectorAll('.question');
   let surveyData = "";
 
@@ -233,4 +260,6 @@ function sendSurvey() {
   // Open Gmail in the browser with the pre-filled subject and body
   window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`;
 }
+*/
+
 
