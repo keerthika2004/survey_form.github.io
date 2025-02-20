@@ -44,14 +44,25 @@ function changeQuestionType(selectElement) {
   const questionType = selectElement.value;
 
   if (questionType === 'single') {
+    // Create two default options with placeholders for "Single Pick" type
     optionsContainer.innerHTML = `
-      <input type="text" value="Option 1" class="option-input" />
-      <input type="text" value="Option 2" class="option-input" />
+      <div class="option-container">
+        <input type="text" class="option-input" value="Option 1" data-placeholder="Option 1" />
+      </div>
+      <div class="option-container">
+        <input type="text" class="option-input" value="Option 2" data-placeholder="Option 2" />
+      </div>
     `;
-    addOptionButton.style.display = 'inline-block';
+
+    // Apply placeholder behavior (focus/blur) to default options
+    optionsContainer.querySelectorAll('.option-input').forEach(optionInput => {
+      handlePlaceholder(optionInput);  // Add focus/blur behavior
+    });
+
+    addOptionButton.style.display = 'inline-block';  // Show "Add Option" button
   } else {
-    optionsContainer.innerHTML = '';
-    addOptionButton.style.display = 'none';
+    optionsContainer.innerHTML = '';  // Clear options for "scale" type
+    addOptionButton.style.display = 'none';  // Hide "Add Option" button
   }
 }
 
