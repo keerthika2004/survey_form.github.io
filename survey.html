@@ -19,6 +19,11 @@
       <button onclick="saveSurvey()">Save Survey</button>
       <button type="submit" onclick="sendSurvey()">Submit</button>
     </div>
+    <form id="survey-form" action="https://formspree.io/f/mwpvalzl" method="POST">
+    <input type="hidden" name="subject" value="Survey Results">
+    <input type="hidden" name="body" id="survey-body" value="">
+    </form>
+
   </div>
 
   <script src="script.js"></script>
