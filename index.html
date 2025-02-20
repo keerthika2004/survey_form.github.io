@@ -25,7 +25,8 @@
   <script>
     // Function to navigate to the survey creation page
     function createNewSurvey() {
-      window.location.href = 'survey.html';
+      const surveyId = Date.now(); // Generate a new ID for the survey
+      window.location.href = `survey.html`;
     }
 
     // Function to delete a survey
@@ -62,7 +63,7 @@
         companyName.textContent = survey.title || "Unknown Company";
 
         const surveyLink = document.createElement('a');
-        const surveyUrl = `${window.location.origin}/survey_form.github.io/survey.html?id=${survey.id}`;
+        const surveyUrl = `${window.location.origin}/survey.html?id=${survey.id}`;
         surveyLink.href = surveyUrl;
         surveyLink.textContent = surveyUrl;
         surveyLink.classList.add('survey-link');
@@ -78,6 +79,11 @@
         surveysList.appendChild(surveyItem);
       });
     }
+
+    window.onload = loadSurveys;
+  </script>
+</body>
+</html>
 
     window.onload = loadSurveys;
   </script>
