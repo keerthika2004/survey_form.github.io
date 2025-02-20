@@ -226,11 +226,11 @@ function sendSurvey() {
   });
 
   // Open Gmail in the browser with the pre-filled subject and body
-  const email = "vkr.games.play@gmail.com"; // Replace with the recipient email address
+  const email = "info@swoopt.app"; // Replace with the recipient email address
   const subject = "Survey Results";
   const body = encodeURIComponent(surveyData);
 
   // Open Gmail in the browser with the pre-filled subject and body
-  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${body}`, '_blank');
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`;
 }
 
