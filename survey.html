@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Survey</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Create Your Survey</h1>
-
     <div id="survey-container">
       <!-- Questions will be loaded here dynamically -->
     </div>
@@ -17,7 +17,7 @@
     <div class="action-buttons">
       <button onclick="addQuestion()">Add Question</button>
       <button onclick="saveSurvey()">Save Survey</button>
-      <button onclick="submitForm()">Submit Form</button>
+      <button type="submit" onclick="sendSurvey()">Submit</button>
     </div>
   </div>
 
@@ -25,36 +25,61 @@
   <script>
     // Function to load the survey data based on the ID in the URL
     function loadSurveyData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const surveyId = urlParams.get('id');  // Get the survey ID from the URL
-      const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  const urlParams = new URLSearchParams(window.location.search);
+  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
 
-      const survey = surveys.find(survey => survey.id === Number(surveyId));  // Find the survey by ID
+  const survey = surveys.find(survey => survey.id === Number(surveyId));  // Find the survey by ID
 
-      if (survey) {
-        // Populate the survey title and questions
-        document.querySelector('h1').textContent = `Edit Survey: ${survey.title}`;
-        survey.data.forEach(question => {
-          const newQuestion = document.createElement('div');
-          newQuestion.classList.add('question');
-          newQuestion.innerHTML = `
-            <input type="text" class="question-text" value="${question.text}" />
-            <select class="question-type" onchange="changeQuestionType(this)">
-              <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
-              <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
-            </select>
-            <div class="options-container">
-              ${question.options.map(option => `<input type="text" value="${option}" class="option-input" />`).join('')}
+  if (survey) {
+    // Populate the survey title and questions
+    document.querySelector('h1').textContent = `Edit Survey: ${survey.title}`;
+    survey.data.forEach(question => {
+      const newQuestion = document.createElement('div');
+      newQuestion.classList.add('question');
+      newQuestion.innerHTML = `
+        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
+        <input type="text" class="question-text" value="${question.text}" />
+        <select class="question-type" onchange="changeQuestionType(this)">
+          <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
+          <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
+        </select>
+        <div class="options-container">
+          ${question.options.map((option, index) => `
+            <div class="option-container">
+              <input type="text" class="option-input" value="${option}" data-placeholder="Option ${index + 1}" />
             </div>
-            <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-            <button class="add-option" onclick="addOption(this)" style="${question.type === 'single' ? 'display:inline-block;' : 'display:none;'}">Add Option</button>
-          `;
-          document.getElementById('survey-container').appendChild(newQuestion);
-        });
-      } else {
-        alert('Survey not found!');
-      }
-    }
+          `).join('')}
+        </div>
+        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
+        <button class="add-option" onclick="addOption(this)" style="${question.type === 'single' ? 'display:inline-block;' : 'display:none;'}">Add Option</button>
+      `;
+      document.getElementById('survey-container').appendChild(newQuestion);
+
+      // After adding the question, add delete buttons and event listeners for focus/blur to the existing options
+      const optionsContainers = newQuestion.querySelectorAll('.option-container');
+      optionsContainers.forEach(optionContainer => {
+        const input = optionContainer.querySelector('.option-input');
+        
+        // Add focus and blur event listeners to handle placeholder behavior
+        handlePlaceholder(input);
+        
+        if (!optionContainer.querySelector('.delete-option')) {
+          const deleteButton = document.createElement('button');
+          deleteButton.classList.add('delete-option');
+          deleteButton.innerText = 'Delete Option';
+          deleteButton.onclick = function() {
+            deleteOption(this);
+          };
+          optionContainer.appendChild(deleteButton);
+        }
+      });
+    });
+  } else {
+    alert('Survey not found!');
+  }
+}
+
 
     window.onload = loadSurveyData;  // Call the function when the page loads
   </script>
