@@ -179,6 +179,42 @@ function saveSurvey() {
 
 function sendSurvey() {
   const questions = document.querySelectorAll('.question');
+  let formattedSurveyData = '';
+  const surveyTitle = document.querySelector('h1').textContent.replace('Edit Survey: ', ''); // Get the survey title
+
+  // Format the survey data
+  questions.forEach((question, index) => {
+    const questionText = question.querySelector('.question-text').value;
+    const questionType = question.querySelector('.question-type').value;
+    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
+
+    formattedSurveyData += `Question ${index + 1}: ${questionText}\nType: ${questionType}\n`;
+
+    if (questionType === 'single') {
+      formattedSurveyData += `Options:\n${options.map(option => `- ${option}`).join('\n')}\n`;
+    }
+    formattedSurveyData += '\n'; // Add extra line between questions
+  });
+  const userEmail = prompt("Enter your email address:");
+
+  // Send the email using EmailJS
+  emailjs.send('service_6yfw8qv', 'template_uxe05r9', {
+    to_name: 'Survey Team', // Replace with actual recipient name
+    from_name: 'User Name', // Replace with user name if available
+    survey_title: surveyTitle,
+    survey_results: formattedSurveyData
+  })
+  .then((response) => {
+    console.log('SUCCESS!', response.status, response.text);
+    alert('Survey submitted successfully!');
+  }, (error) => {
+    console.log('FAILED...', error);
+    alert('Failed to submit the survey.');
+  });
+}
+
+/*function sendSurvey() {
+  const questions = document.querySelectorAll('.question');
   let surveyData = "";
 
   // Collect the survey data
@@ -202,7 +238,7 @@ function sendSurvey() {
   // Submit the form programmatically to Formspree
   document.getElementById('survey-form').submit();
 }
-
+*/
 
 //submit the survey
 /*function sendSurvey() {
