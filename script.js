@@ -183,6 +183,49 @@ function sendSurvey() {
     });
 }
 
+function saveSurvey() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+
+  const questions = document.querySelectorAll('.question');
+  const surveyTitle = document.querySelector('h1').textContent.replace('Company name: ', ''); // Get the survey title
+  const surveyData = [];
+
+  questions.forEach((question) => {
+    const questionText = question.querySelector('.question-text').value;
+    const questionType = question.querySelector('.question-type').value;
+    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
+
+    surveyData.push({
+      text: questionText,
+      type: questionType,
+      options: options
+    });
+  });
+
+  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+
+  if (surveyId) {
+    // Update the existing survey
+    const surveyIndex = surveys.findIndex(survey => survey.id === Number(surveyId));
+    if (surveyIndex !== -1) {
+      surveys[surveyIndex].title = surveyTitle;
+      surveys[surveyIndex].data = surveyData;
+    }
+  } else {
+    // Create a new survey if no ID is present
+    surveys.push({
+      id: Date.now(),
+      title: surveyTitle,
+      data: surveyData
+    });
+  }
+
+  localStorage.setItem('surveys', JSON.stringify(surveys));
+
+  alert('Survey saved successfully!');
+  window.location.href = 'index.html';  // Redirect to main page after saving
+}
 
 /*function sendSurvey() {
   const questions = document.querySelectorAll('.question');
