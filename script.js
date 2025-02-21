@@ -29,14 +29,14 @@ function addQuestion() {
       <option value="single">Single Pick</option>
     </select>
     <div class="options-container"></div>
-    <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
+    <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
     <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
   `;
 
   surveyContainer.appendChild(newQuestion);
 }
 
-// Change question type (scale/single-pick)
+
 function changeQuestionType(selectElement) {
   const questionDiv = selectElement.parentElement;
   const optionsContainer = questionDiv.querySelector('.options-container');
@@ -87,7 +87,6 @@ function handlePlaceholder(input) {
   }
 }
 
-
 function addOption(button) {
   const optionsContainer = button.closest('.question').querySelector('.options-container');
   const currentOptions = optionsContainer.querySelectorAll('.option-input').length;
@@ -104,10 +103,9 @@ function addOption(button) {
 
   // Add event listeners for focus and blur to handle placeholder behavior
   handlePlaceholder(newOption);
-
   const deleteButton = document.createElement('button');
   deleteButton.classList.add('delete-option');
-  deleteButton.innerText = 'Delete Option';
+  deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
   deleteButton.onclick = function() {
     deleteOption(this);
   };
@@ -116,10 +114,8 @@ function addOption(button) {
   optionContainer.classList.add('option-container');
   optionContainer.appendChild(newOption);
   optionContainer.appendChild(deleteButton);
-
   optionsContainer.appendChild(optionContainer);
 }
-
 
 // Delete an individual option from a "Single Pick" question
 function deleteOption(button) {
@@ -133,51 +129,62 @@ function deleteQuestion(button) {
   questionDiv.remove();
 }
 
-// Save the survey
-function saveSurvey() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
-
-  const questions = document.querySelectorAll('.question');
-  const surveyData = [];
-
-  questions.forEach((question) => {
-    const questionText = question.querySelector('.question-text').value;
-    const questionType = question.querySelector('.question-type').value;
-    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
-
-    surveyData.push({
+function sendSurvey() {
+  const surveyContainer = document.getElementById('survey-container');
+  const surveyTitle = document.querySelector('h1').textContent; // Use the survey title as part of the email subject
+  const questions = [];
+  
+  surveyContainer.querySelectorAll('.question').forEach(questionDiv => {
+    const questionText = questionDiv.querySelector('.question-text').value;
+    const questionType = questionDiv.querySelector('.question-type').value;
+    const options = [];
+    
+    questionDiv.querySelectorAll('.option-input').forEach(optionInput => {
+      options.push(optionInput.value); // Collect all options for the question
+    });
+    
+    // Store the question data
+    questions.push({
       text: questionText,
       type: questionType,
       options: options
     });
   });
 
-  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  // Create the email content
+  const emailContent = `
+    <h2>${surveyTitle}</h2>
+    ${questions.map((q, index) => `
+      <div>
+        <h3>Question ${index + 1}: ${q.text}</h3>
+        <p>Type: ${q.type}</p>
+        <ul>${q.options.map(option => `<li>${option}</li>`).join('')}</ul>
+      </div>
+    `).join('')}
+  `;
 
-  if (surveyId) {
-    // Update the existing survey
-    const surveyIndex = surveys.findIndex(survey => survey.id === Number(surveyId));
-    if (surveyIndex !== -1) {
-      surveys[surveyIndex].data = surveyData;
-    }
-  } else {
-    // Create a new survey if no ID is present
-    const surveyTitle = prompt("Enter a title for your survey:");
-    surveys.push({
-      id: Date.now(),
-      title: surveyTitle,
-      data: surveyData
+  // Define the email parameters for EmailJS
+  const emailParams = {
+    to_name: 'Swoopt Team', // Your client name or team
+    to_email: 'info@swoopt.app', // This is the recipient email for your client
+    from_name: 'Survey Sender', // Replace with your name or company name
+    message: emailContent,      // The content of the email
+    reply_to: 'your_email@example.com' // Optional: replace with your email for replies
+  };
+
+  // Send the email using EmailJS
+  emailjs.send('service_6yfw8qv', 'template_uxe05r9', emailParams)
+    .then(function(response) {
+      alert('Survey submitted successfully!');
+      console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+      alert('Failed to send the survey. Please try again.');
+      console.log('FAILED...', error);
     });
-  }
-
-  localStorage.setItem('surveys', JSON.stringify(surveys));
-
-  alert('Survey saved successfully!');
-  window.location.href = 'index.html';  // Redirect to main page after saving
 }
 
-function sendSurvey() {
+
+/*function sendSurvey() {
   const questions = document.querySelectorAll('.question');
   let formattedSurveyData = '';
   const surveyTitle = document.querySelector('h1').textContent.replace('Edit Survey: ', ''); // Get the survey title
@@ -212,6 +219,51 @@ function sendSurvey() {
     alert('Failed to submit the survey.');
   });
 }
+*/
+
+// Save the survey
+function saveSurvey() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+
+  const questions = document.querySelectorAll('.question');
+  const surveyData = [];
+
+  questions.forEach((question) => {
+    const questionText = question.querySelector('.question-text').value;
+    const questionType = question.querySelector('.question-type').value;
+    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
+
+    surveyData.push({
+      text: questionText,
+      type: questionType,
+      options: options
+    });
+  });
+
+  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+
+  if (surveyId) {
+    // Update the existing survey
+    const surveyIndex = surveys.findIndex(survey => survey.id === Number(surveyId));
+    if (surveyIndex !== -1) {
+      surveys[surveyIndex].data = surveyData;
+    }
+  } else {
+    // Create a new survey if no ID is present
+    surveys.push({
+      id: Date.now(),
+      title: surveyTitle,
+      data: surveyData
+    });
+  }
+
+  localStorage.setItem('surveys', JSON.stringify(surveys));
+
+  alert('Survey saved successfully!');
+  window.location.href = 'index.html';  // Redirect to main page after saving
+}
+
 
 /*function sendSurvey() {
   const questions = document.querySelectorAll('.question');
