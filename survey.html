@@ -6,9 +6,13 @@
   <title>Create Survey</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="container">
+    <!-- Add the header image at the top with a relative path -->
+    <img src="header.png" alt="Survey Header Image" class="header-img">
+
     <h1>Create Your Survey</h1>
     <div id="survey-container">
       <!-- Questions will be loaded here dynamically -->
@@ -19,79 +23,69 @@
       <button onclick="saveSurvey()">Save Survey</button>
       <button type="submit" onclick="sendSurvey()">Submit</button>
     </div>
-    <form id="survey-form" action="https://formspree.io/f/mwpvalzl" method="POST">
-    <input type="hidden" name="subject" value="Survey Results">
-    <input type="hidden" name="body" id="survey-body" value="">
-    </form>
-
   </div>
 
   <script src="script.js"></script>
   <script>
-    // Function to load the survey data based on the ID in the URL
     function loadSurveyData() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
-  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+      const urlParams = new URLSearchParams(window.location.search);
+      const surveyId = urlParams.get('id');
+      const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
 
-  const survey = surveys.find(survey => survey.id === Number(surveyId));  // Find the survey by ID
+      const survey = surveys.find(survey => survey.id === Number(surveyId));
 
-  if (survey) {
-    // Populate the survey title and questions
-    document.querySelector('h1').textContent = `Edit Survey: ${survey.title}`;
-    survey.data.forEach(question => {
-      const newQuestion = document.createElement('div');
-      newQuestion.classList.add('question');
-      newQuestion.innerHTML = `
-        <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
-        <input type="text" class="question-text" value="${question.text}" />
-        <select class="question-type" onchange="changeQuestionType(this)">
-          <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
-          <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
-        </select>
-        <div class="options-container">
-          ${question.options.map((option, index) => `
-            <div class="option-container">
-              <input type="text" class="option-input" value="${option}" data-placeholder="Option ${index + 1}" />
+      if (survey) {
+        document.querySelector('h1').textContent = `Company name: ${survey.title}`;
+        survey.data.forEach(question => {
+          const newQuestion = document.createElement('div');
+          newQuestion.classList.add('question');
+          newQuestion.innerHTML = `
+            <span class="drag-handle">⇅</span>
+            <input type="text" class="question-text" value="${question.text}" />
+            <select class="question-type" onchange="changeQuestionType(this)">
+              <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
+              <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
+            </select>
+            <div class="options-container">
+              ${question.options.map((option, index) => `
+                <div class="option-container">
+                  <input type="text" class="option-input" value="${option}" data-placeholder="Option ${index + 1}" />
+                </div>
+              `).join('')}
             </div>
-          `).join('')}
-        </div>
-        <button class="delete-question" onclick="deleteQuestion(this)">Delete</button>
-        <button class="add-option" onclick="addOption(this)" style="${question.type === 'single' ? 'display:inline-block;' : 'display:none;'}">Add Option</button>
-      `;
-      document.getElementById('survey-container').appendChild(newQuestion);
+            <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
+            <button class="add-option" onclick="addOption(this)" style="${question.type === 'single' ? 'display:inline-block;' : 'display:none;'}">Add Option</button>
+          `;
+          document.getElementById('survey-container').appendChild(newQuestion);
 
-      // After adding the question, add delete buttons and event listeners for focus/blur to the existing options
-      const optionsContainers = newQuestion.querySelectorAll('.option-container');
-      optionsContainers.forEach(optionContainer => {
-        const input = optionContainer.querySelector('.option-input');
-        
-        // Add focus and blur event listeners to handle placeholder behavior
-        handlePlaceholder(input);
-        
-        if (!optionContainer.querySelector('.delete-option')) {
-          const deleteButton = document.createElement('button');
-          deleteButton.classList.add('delete-option');
-          deleteButton.innerText = 'Delete Option';
-          deleteButton.onclick = function() {
-            deleteOption(this);
-          };
-          optionContainer.appendChild(deleteButton);
-        }
-      });
-    });
-  } else {
-    alert('Survey not found!');
-  }
-}
+          const optionsContainers = newQuestion.querySelectorAll('.option-container');
+          optionsContainers.forEach(optionContainer => {
+            const input = optionContainer.querySelector('.option-input');
+            handlePlaceholder(input);
 
+            if (!optionContainer.querySelector('.delete-option')) {
+              const deleteButton = document.createElement('button');
+              deleteButton.classList.add('delete-option');
+              deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+              deleteButton.onclick = function() {
+                deleteOption(this);
+              };
+              optionContainer.appendChild(deleteButton);
+            }
+          });
+        });
+      } else {
+        alert('Survey not found!');
+      }
+    }
 
-    window.onload = loadSurveyData;  // Call the function when the page loads
+    window.onload = loadSurveyData;
   </script>
-
+  
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-     emailjs.init('ie63K_S6mxig-AKEL'); // Replace 'YOUR_PUBLIC_KEY' with the public key from your EmailJS account
+    emailjs.init('ie63K_S6mxig-AKEL'); // Replace with your actual key
   </script>
 </body>
 </html>
+
