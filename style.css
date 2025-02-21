@@ -1,17 +1,25 @@
+.header-img {
+  display: block;  
+  margin: 0 auto 20px;  /* Center the image and add space below it */
+  width: 100%;
+  max-width: 100%;  /* Set a max-width so the image doesn't get too large */
+  height: auto;  /* Maintain the image's aspect ratio */
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #161616;
   padding: 20px;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
-  background-color: white;
+  background-color: rgb(2, 2, 2);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(206, 185, 185, 0.1);
@@ -20,19 +28,37 @@ body {
 
 h1, h2 {
   text-align: center;
+  color: #f9f9f9;
 }
 
 .question {
-  background-color: #f9f9f9;
-  padding: 20px;
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center; /* Align all items vertically in the center */
+  justify-content: space-between; /* Spread items evenly */
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 10px; /* Space between questions */
+  background-color: #f9f9f9;
+  position: relative;
 }
+
+/* Style the delete button */
+.delete-question {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #f44336;
+  padding: 8px;
+  margin-left: auto; /* Align it to the far right */
+}
+
+/* Add hover effect for delete button */
+.delete-question:hover {
+  color: #e57373; /* Lighten the color on hover */
+}
+
 
 /* Survey List Headers */
 .survey-headers {
@@ -161,13 +187,14 @@ h1, h2 {
   text-align: left;
 }
 
+/* Style the question text input */
 .question-text {
-  flex: 1;
-  padding: 10px;
-  margin-right: 10px;
+  flex-grow: 2; /* Allow the question input to take up most of the space */
+  padding: 8px;
   font-size: 16px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-right: 15px;
 }
 
 .question-type {
@@ -208,13 +235,14 @@ button:hover {
   background-color: #0056b3;
 }
 
-.delete-question {
+/*.delete-question {
   background-color: #e74c3c;
 }
 
 .delete-question:hover {
   background-color: #c0392b;
 }
+*/
 
 .add-option {
   margin-top: 10px;
@@ -304,4 +332,4 @@ button:hover {
   opacity: 0.5;
   background-color: #ddd;
 }
-  
+    
