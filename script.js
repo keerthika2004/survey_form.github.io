@@ -261,7 +261,7 @@ function saveSurvey() {
   localStorage.setItem('surveys', JSON.stringify(surveys));
 
   alert('Survey saved successfully!');
-  window.location.href = 'index.html';  // Redirect to main page after saving
+  window.location.href = 'https://keerthika2004.github.io/survey_form.github.io/';  // Redirect to main page after saving
 }
 
 
