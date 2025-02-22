@@ -129,7 +129,7 @@ function deleteQuestion(button) {
   questionDiv.remove();
 }
 
-function sendSurvey() {
+/*function sendSurvey() {
   const surveyContainer = document.getElementById('survey-container');
   const surveyTitle = document.querySelector('h1').textContent; // Use the survey title as part of the email subject
   const questions = [];
@@ -182,6 +182,43 @@ function sendSurvey() {
       console.log('FAILED...', error);
     });
 }
+*/
+
+function sendSurvey() {
+  const surveyTitle = "Survey Response"; // Customize as needed
+  const questions = document.querySelectorAll('.question');
+
+  // Create the plain text email content
+  let emailContent = `${surveyTitle}\n\n`;
+  
+  questions.forEach((question, index) => {
+    const questionText = question.querySelector('.question-text').value;
+    const questionType = question.querySelector('.question-type').value;
+    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
+
+    emailContent += `Question ${index + 1}: ${questionText}\n`;
+    emailContent += `Type: ${questionType}\n`;
+
+    if (options.length > 0) {
+      emailContent += `Options:\n${options.map(option => `- ${option}`).join('\n')}\n`;
+    }
+
+    emailContent += '\n'; // Add a line break between questions
+  });
+
+  // Send the email using EmailJS in plain text format
+  emailjs.send("service_6yfw8qv", "template_uxe05r9", {
+    to_name: "Swoopt Team",
+    from_name: "Survey Sender",
+    message: emailContent  // Send as plain text
+  })
+  .then(function(response) {
+    alert("Survey sent successfully!");
+  }, function(error) {
+    console.log("Failed to send survey:", error);
+  });
+}
+
 // Save the survey
 function saveSurvey() {
   const urlParams = new URLSearchParams(window.location.search);
