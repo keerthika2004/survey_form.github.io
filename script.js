@@ -185,83 +185,91 @@ function deleteQuestion(button) {
 */
 
 function sendSurvey() {
-  const surveyTitle = "Survey Response"; // Customize as needed
-  const questions = document.querySelectorAll('.question');
+  const urlParams = new URLSearchParams(window.location.search);
+  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  const survey = surveys.find(s => s.id === Number(surveyId));
 
-  // Create the plain text email content
-  let emailContent = `${surveyTitle}\n\n`;
-  
+  if (!survey) {
+    alert('Survey not found!');
+    return;
+  }
+
+  const surveyTitle = survey.title;  // Use the company name (survey title)
+  const questions = document.querySelectorAll('.question');
+  let surveyData = `Company name: ${surveyTitle}\n\n`;  // Include company name (survey title)
+
   questions.forEach((question, index) => {
     const questionText = question.querySelector('.question-text').value;
     const questionType = question.querySelector('.question-type').value;
     const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
 
-    emailContent += `Question ${index + 1}: ${questionText}\n`;
-    emailContent += `Type: ${questionType}\n`;
+    surveyData += `Question ${index + 1}: ${questionText}\nType: ${questionType}\n`;
 
     if (options.length > 0) {
-      emailContent += `Options:\n${options.map(option => `- ${option}`).join('\n')}\n`;
+      surveyData += `Options:\n${options.join(',\n')}\n`;
     }
 
-    emailContent += '\n'; // Add a line break between questions
+    surveyData += '\n';
   });
 
-  // Send the email using EmailJS in plain text format
   emailjs.send("service_6yfw8qv", "template_uxe05r9", {
     to_name: "Swoopt Team",
     from_name: "Survey Sender",
-    message: emailContent  // Send as plain text
+    survey_title: surveyTitle,  // Company name as survey title
+    message: surveyData,        // This is the survey data
   })
   .then(function(response) {
-    alert("Survey sent successfully!");
+    console.log('SUCCESS!', response.status, response.text);
+    alert('Survey sent successfully!');
+    window.location.href = "survey_completed.html"; // Redirect here!
   }, function(error) {
-    console.log("Failed to send survey:", error);
+    console.log('FAILED...', error);
+    alert('Survey sending failed.');
   });
+  // Send email using EmailJS
+  /*emailjs.send("service_6yfw8qv", "template_uxe05r9", {
+    to_name: "Swoopt Team",
+    from_name: "Survey Sender",
+    survey_title: surveyTitle,  // Company name as survey title
+    message: surveyData,        // This is the survey data
+  })
+  .then(function(response) {
+    console.log('SUCCESS!', response.status, response.text);
+    alert('Survey sent successfully!');
+  }, function(error) {
+    console.log('FAILED...', error);
+    alert('Survey sending failed.');
+  });*/
 }
 
-// Save the survey
 function saveSurvey() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+  const surveyTitle = prompt("Enter a survey title:");
+  if (!surveyTitle) return;
 
-  const questions = document.querySelectorAll('.question');
-  const surveyData = [];
+  let surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  const newSurvey = {
+    id: Date.now(),
+    title: surveyTitle,
+    data: []
+  };
 
-  questions.forEach((question) => {
-    const questionText = question.querySelector('.question-text').value;
-    const questionType = question.querySelector('.question-type').value;
-    const options = Array.from(question.querySelectorAll('.option-input')).map(option => option.value);
-
-    surveyData.push({
-      text: questionText,
-      type: questionType,
-      options: options
-    });
+  document.querySelectorAll('.question').forEach(questionEl => {
+    const questionText = questionEl.querySelector('.question-text').value;
+    const questionType = questionEl.querySelector('.question-type').value;
+    const options = [...questionEl.querySelectorAll('.option-input')].map(input => input.value);
+    newSurvey.data.push({ text: questionText, type: questionType, options });
   });
 
-  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
-
-  if (surveyId) {
-    // Update the existing survey
-    const surveyIndex = surveys.findIndex(survey => survey.id === Number(surveyId));
-    if (surveyIndex !== -1) {
-      surveys[surveyIndex].data = surveyData;
-    }
-  } else {
-    // Create a new survey if no ID is present
-    const surveyTitle = prompt("Enter a title for your survey:");
-    surveys.push({
-      id: Date.now(),
-      title: surveyTitle,
-      data: surveyData
-    });
-  }
-
+  surveys.push(newSurvey);
   localStorage.setItem('surveys', JSON.stringify(surveys));
 
-  alert('Survey saved successfully!');
-  window.location.href = 'index.html';  // Redirect to main page after saving
+  alert("Survey saved successfully!");
+
+  // Redirect to the home page (update 'index.html' with your actual home page)
+  window.location.href = "index.html";  
 }
+
 /*function saveSurvey() {
   const urlParams = new URLSearchParams(window.location.search);
   const surveyId = urlParams.get('id');  // Get the survey ID from the URL
