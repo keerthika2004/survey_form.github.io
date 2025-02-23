@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Completed</title>
+  <style>
+    body {
+      background: radial-gradient(circle, #222, #000); /* Radial gradient for depth */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+      color: #ddd;
+      text-align: center;
+      overflow: hidden; /* Hide any potential overflow */
+    }
+    .logo-container {
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(10, 10, 10, 0.8)); /* Refined background */
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease-in-out; /* Smooth transform on hover */
+    }
+    .logo-container:hover {
+      transform: translateY(-5px); /* Slight lift on hover */
+    }
+    .logo {
+      max-width: 180px;
+      height: auto;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); /* Subtle shadow on logo */
+      animation: logoPulse 2s infinite alternate ease-in-out; /* Pulsing logo animation */
+    }
+    h3 {
+      font-size: 1.6em;
+      font-weight: 500;
+      margin-top: 25px;
+      line-height: 1.7;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Text shadow for depth */
+      animation: textFadeIn 1.5s ease-out;
+    }
+
+    @keyframes logoPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    @keyframes textFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="logo-container">
+    <img src="logo.png" alt="Your Logo" class="logo">
+    <h3>Congratulations! Your Swoopt customer survey has now been submitted to the Swoopt team.</h3>
+  </div>
+</body>
+</html>
