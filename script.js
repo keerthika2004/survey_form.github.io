@@ -29,8 +29,8 @@ function addQuestion() {
       <option value="single">Single Pick</option>
     </select>
     <div class="options-container"></div>
-    <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
     <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
+    <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
   `;
 
   surveyContainer.appendChild(newQuestion);
