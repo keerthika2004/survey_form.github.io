@@ -10,82 +10,82 @@
 </head>
 <body>
   <div class="container">
-    <!-- Add the header image at the top with a relative path -->
     <img src="header.png" alt="Survey Header Image" class="header-img">
-
     <h1>Create Your Survey</h1>
     <div id="survey-container">
       <!-- Questions will be loaded here dynamically -->
     </div>
-
     <div class="action-buttons">
       <button onclick="addQuestion()">Add Question</button>
       <button onclick="saveSurvey()">Save Survey</button>
-      <button type="submit" onclick="sendSurvey()">Submit</button>
+      <button type="submit" onclick="sendSurvey()" style="display: none;">Submit</button>
     </div>
   </div>
 
   <script src="script.js"></script>
   <script>
-    function loadSurveyData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const surveyId = urlParams.get('id');
-      const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  function loadSurveyData() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const surveyId = urlParams.get('id');  // Get the survey ID from the URL
+  const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+  const survey = surveys.find(survey => survey.id === Number(surveyId));  // Find the survey by ID
 
-      const survey = surveys.find(survey => survey.id === Number(surveyId));
+  if (!survey) {
+    alert('Survey not found!');
+    return;
+  }
 
-      if (survey) {
-        document.querySelector('h1').textContent = `Company name: ${survey.title}`;
-        survey.data.forEach(question => {
-          const newQuestion = document.createElement('div');
-          newQuestion.classList.add('question');
-          newQuestion.innerHTML = `
-            <span class="drag-handle">⇅</span>
-            <input type="text" class="question-text" value="${question.text}" />
-            <select class="question-type" onchange="changeQuestionType(this)">
-              <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
-              <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
-            </select>
-            <div class="options-container">
-              ${question.options.map((option, index) => `
-                <div class="option-container">
-                  <input type="text" class="option-input" value="${option}" data-placeholder="Option ${index + 1}" />
-                </div>
-              `).join('')}
-            </div>
-            <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
-            <button class="add-option" onclick="addOption(this)" style="${question.type === 'single' ? 'display:inline-block;' : 'display:none;'}">Add Option</button>
-          `;
-          document.getElementById('survey-container').appendChild(newQuestion);
+  // Populate the survey title
+  document.querySelector('h1').textContent = `Company name: ${survey.title}`;
 
-          const optionsContainers = newQuestion.querySelectorAll('.option-container');
-          optionsContainers.forEach(optionContainer => {
-            const input = optionContainer.querySelector('.option-input');
-            handlePlaceholder(input);
+  // Populate survey questions
+  survey.data.forEach(question => {
+    const newQuestion = document.createElement('div');
+    newQuestion.classList.add('question');
+    newQuestion.innerHTML = `
+      <span class="drag-handle">⇅</span>  <!-- Drag handle for moving -->
+      <input type="text" class="question-text" value="${question.text}" />
+      <select class="question-type" onchange="changeQuestionType(this)">
+        <option value="scale" ${question.type === 'scale' ? 'selected' : ''}>1-5 Scale</option>
+        <option value="single" ${question.type === 'single' ? 'selected' : ''}>Single Pick</option>
+      </select>
+      <div class="options-container">
+        ${question.options.map((option, index) => `
+          <div class="option-container">
+            <input type="text" class="option-input" value="${option}" data-placeholder="Option ${index + 1}" />
+            <button class="delete-option" onclick="deleteOption(this)"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        `).join('')}
+      </div>
+      <button class="add-option option-container" onclick="addOption(this)" style="${question.type === 'single' ? 'display:flex' : 'display:none;'}">Add Option</button>
+      <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
+    `;
 
-            if (!optionContainer.querySelector('.delete-option')) {
-              const deleteButton = document.createElement('button');
-              deleteButton.classList.add('delete-option');
-              deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-              deleteButton.onclick = function() {
-                deleteOption(this);
-              };
-              optionContainer.appendChild(deleteButton);
-            }
-          });
-        });
-      } else {
-        alert('Survey not found!');
-      }
-    }
+    document.getElementById('survey-container').appendChild(newQuestion);
 
-    window.onload = loadSurveyData;
-  </script>
+    // Attach placeholder event handlers
+    newQuestion.querySelectorAll('.option-input').forEach(input => handlePlaceholder(input));
+  });
+
+  // Replace Save Button with Submit Button if the survey is already saved
+  const saveButton = document.querySelector('.action-buttons button[onclick="saveSurvey()"]');
+  const submitButton = document.querySelector('.action-buttons button[onclick="sendSurvey()"]');
+
+  if (surveyId) {
+    if (saveButton) saveButton.style.display = 'none';  // Hide Save Button
+    if (submitButton) submitButton.style.display = 'inline-block';  // Show Submit Button
+  }
+}
+
+window.onload = loadSurveyData;  // Load survey when the page loads
+
   
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-    emailjs.init('ie63K_S6mxig-AKEL'); // Replace with your actual key
+     emailjs.init('ie63K_S6mxig-AKEL'); // Replace 'YOUR_PUBLIC_KEY' with the public key from your EmailJS account
   </script>
+  
 </body>
 </html>
 
