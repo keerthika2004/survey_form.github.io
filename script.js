@@ -29,7 +29,7 @@ function addQuestion() {
       <option value="single">Single Pick</option>
     </select>
     <div class="options-container"></div>
-    <button class="add-option" onclick="addOption(this)" style="display:none;">Add Option</button>
+    <button class="add-option" onclick="addOption(this)" style="display:none;">+Alternativ</button>
     <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
   `;
 
@@ -221,7 +221,7 @@ function sendSurvey() {
   })
   .then(function(response) {
     console.log('SUCCESS!', response.status, response.text);
-    alert('Survey sent successfully!');
+    alert('Enkäten har skickats!');
     window.location.href = "survey_completed.html"; // Redirect here!
   }, function(error) {
     console.log('FAILED...', error);
