@@ -16,9 +16,9 @@
       <!-- Questions will be loaded here dynamically -->
     </div>
     <div class="action-buttons">
-      <button onclick="addQuestion()">Add Question</button>
+      <button onclick="addQuestion()">+Fråga</button>
       <button onclick="saveSurvey()">Save Survey</button>
-      <button type="submit" onclick="sendSurvey()" style="display: none;">Submit</button>
+      <button type="submit" onclick="sendSurvey()" style="display: none;">Skicka</button>
     </div>
   </div>
 
@@ -36,7 +36,7 @@
   }
 
   // Populate the survey title
-  document.querySelector('h1').textContent = `Company name: ${survey.title}`;
+  document.querySelector('h1').textContent = `Företagsnamn: ${survey.title}`;
 
   // Populate survey questions
   survey.data.forEach(question => {
@@ -57,7 +57,7 @@
           </div>
         `).join('')}
       </div>
-      <button class="add-option option-container" onclick="addOption(this)" style="${question.type === 'single' ? 'display:flex' : 'display:none;'}">Add Option</button>
+      <button class="add-option option-container" onclick="addOption(this)" style="${question.type === 'single' ? 'display:flex' : 'display:none;'}">+Alternativ</button>
       <button class="delete-question" onclick="deleteQuestion(this)"><i class="fas fa-trash-alt"></i></button>
     `;
 
