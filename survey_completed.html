@@ -6,42 +6,47 @@
   <title>Survey Completed</title>
   <style>
     body {
-      background: radial-gradient(circle, #000000, #000); /* Radial gradient for depth*/
+      background: radial-gradient(circle, #000000, #000);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+      font-family: 'Montserrat', sans-serif;
       color: #ddd;
       text-align: center;
-      overflow: hidden; /* Hide any potential overflow */
+      overflow: hidden;
     }
     .logo-container {
-      /*background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(10, 10, 10, 0.8)); /* Refined background */
       background-color: black;
       padding: 50px;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      transition: transform 0.3s ease-in-out; /* Smooth transform on hover */
+      transition: transform 0.3s ease-in-out;
     }
     .logo-container:hover {
-      transform: translateY(-5px); /* Slight lift on hover */
+      transform: translateY(-5px);
     }
     .logo {
       max-width: 180px;
       height: auto;
       margin-bottom: 30px;
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); /* Subtle shadow on logo */
-      animation: logoPulse 2s infinite alternate ease-in-out; /* Pulsing logo animation */
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+      animation: logoPulse 2s infinite alternate ease-in-out;
+      display: block; /* Ensures the logo is a block element for consistent spacing */
+      margin-left: auto; /* Centers the logo horizontally */
+      margin-right: auto;
     }
     h3 {
       font-size: 1.6em;
       font-weight: 500;
       margin-top: 25px;
       line-height: 1.7;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Text shadow for depth */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
       animation: textFadeIn 1.5s ease-out;
+      margin-left: auto; /* Centers the text horizontally */
+      margin-right: auto;
+      max-width: 80%; /* Limits the width of the text for better readability */
     }
 
     @keyframes logoPulse {
@@ -59,7 +64,7 @@
 <body>
   <div class="logo-container">
     <img src="logo.png" alt="Your Logo" class="logo">
-    <h3>Grattis! Din Swoopt-kundenkät har nu skickats till Swoopt-teamet.</h3>
+    <h3>GRATTIS!<br>Din Swoopt-kundenkät har nu skickats till Swoopt-teamet.</h3>
   </div>
 </body>
 </html>
